@@ -13,22 +13,25 @@ public class Consejo {
     private int identificador;
     private String titulo;
     private String contenido;
-    private String tiempo_vida;
+    private String desde;
+    private String hasta;
     private boolean estado;
     private int idraza;
 
-    public Consejo (String titulo, String contenido, String tiempo_vida, boolean estado, int idraza) {
+    public Consejo (String titulo, String contenido, String desde, String hasta, boolean estado, int idraza) {
         this.titulo = titulo;
         this.contenido = contenido;
-        this.tiempo_vida = tiempo_vida;
+        this.desde = desde;
+        this.hasta = hasta;
         this.estado = estado;
         this.idraza = idraza;
     }
 
-    public Consejo(int identificador, String titulo, String contenido, String tiempo_vida, boolean estado, int idraza) {
+    public Consejo(int identificador, String titulo, String contenido, String desde, String hasta, boolean estado, int idraza) {
         this.identificador = identificador;
         this.contenido = contenido;
-        this.tiempo_vida = tiempo_vida;
+        this.desde = desde;
+        this.hasta = hasta;
         this.estado = estado;
         this.idraza = idraza;
     }
@@ -74,19 +77,6 @@ public class Consejo {
         this.contenido = contenido;
     }
 
-    /**
-     * @return the tiempo_vida
-     */
-    public String getTiempo_vida() {
-        return tiempo_vida;
-    }
-
-    /**
-     * @param tiempo_vida the tiempo_vida to set
-     */
-    public void setTiempo_vida(String tiempo_vida) {
-        this.tiempo_vida = tiempo_vida;
-    }
 
     /**
      * @return the idraza
@@ -111,5 +101,33 @@ public class Consejo {
      */
     public void setEstado(boolean estado) {
         this.estado = estado;
+    }
+
+    /**
+     * @return the desde
+     */
+    public String getDesde() {
+        return desde;
+    }
+
+    /**
+     * @param desde the desde to set
+     */
+    public void setDesde(String desde) {
+        this.desde = desde;
+    }
+
+    /**
+     * @return the hasta
+     */
+    public String getHasta() {
+        return hasta;
+    }
+
+    /**
+     * @param hasta the hasta to set
+     */
+    public void setHasta(String hasta) {
+        this.hasta = hasta;
     }
 }

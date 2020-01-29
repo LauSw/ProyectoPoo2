@@ -28,13 +28,14 @@ public class RazaRepositorio {
     public List<Raza> listar() throws SQLException {
         var razas = new ArrayList<Raza>();
         var consulta = conexion.createStatement();
-        var resultado = consulta.executeQuery("SELECT identificador, nombre, estado, idespecie FROM raza");
+        var resultado = consulta.executeQuery("SELECT identificador, nombre, estado, vida_aproximada, idespecie FROM raza");
         while (resultado.next()) {
             razas.add(
                 new Raza(
                     resultado.getInt("identificador"),
                     resultado.getString("nombre"),
                     resultado.getBoolean("estado"),
+                    resultado.getInt("vida_aproximada"),
                     resultado.getInt("idespecie")
                     
                 )
@@ -46,7 +47,7 @@ public class RazaRepositorio {
     }
 
     public Raza obtener(int identificador) throws SQLException, RazaNoEncontradaExcepcion {
-        var consulta = conexion.prepareStatement("SELECT identificador, nombre, idespecie FROM raza WHERE identificador = ?");
+        var consulta = conexion.prepareStatement("SELECT identificador, nombre, estado, vida_aproximada, idespecie FROM raza WHERE identificador = ?");
         consulta.setInt(1, identificador);
         var resultado = consulta.executeQuery();
         try {
@@ -55,6 +56,7 @@ public class RazaRepositorio {
                     resultado.getInt("identificador"),
                     resultado.getString("nombre"),
                     resultado.getBoolean("estado"),
+                    resultado.getInt("vida_aproximada"),
                     resultado.getInt("idespecie")
                     
                 
@@ -69,19 +71,22 @@ public class RazaRepositorio {
         }
     }
 
-    public void crear(String nombre, int idespecie) throws SQLException {
-        var consulta = conexion.prepareStatement("INSERT INTO raza (identificador, nombre, estado, idespecie) VALUES (?, ?, ?, ?)");
+    public void crear(String nombre, boolean estado, int vida_aproximada, int idespecie) throws SQLException {
+        var consulta = conexion.prepareStatement("INSERT INTO raza (identificador, nombre, estado, vida_aproximada, idespecie) VALUES (?, ?, ?, ?)");
         consulta.setString(1, nombre);
-        consulta.setInt(2, idespecie);
+        consulta.setBoolean(2, estado);
+        consulta.setInt(3, vida_aproximada);
+        consulta.setInt(4, idespecie);
         consulta.executeUpdate();        
         consulta.close();
     }
 
     public void modificar(Raza raza) throws SQLException, RazaNoEncontradaExcepcion {
-        var consulta = conexion.prepareStatement("UPDATE raza SET nombre = ?, idespecie = ? WHERE identificador = ?");
+        var consulta = conexion.prepareStatement("UPDATE raza SET nombre = ?, vida_aproximada = ?, idespecie = ? WHERE identificador = ?");
         consulta.setString(1, raza.getNombre());
-        consulta.setInt(2, raza.getIdespecie());
-        consulta.setInt(3, raza.getIdentificador());
+        consulta.setInt(2, raza.getVida_aproximada());
+        consulta.setInt(3, raza.getIdespecie());
+        consulta.setInt(4, raza.getIdentificador());
         try {
             if (consulta.executeUpdate() == 0) throw new RazaNoEncontradaExcepcion();
         }

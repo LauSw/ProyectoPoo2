@@ -71,10 +71,12 @@ public class VeterinarioRepositorio {
         }
     }
 
-    public void crear(String matricula) throws SQLException {
-        var consulta = conexion.prepareStatement("INSERT INTO veterinario (matricula) VALUES (?)");
+    public void crear(String matricula, String telefono, int idusuario, boolean estado) throws SQLException {
+        var consulta = conexion.prepareStatement("INSERT INTO veterinario (identificador, matricula, telefono, idusuario, estado) VALUES (?, ?, ?, ?, ?)");
         consulta.setString(1, matricula);
-        
+        consulta.setString(2, telefono);
+        consulta.setInt(3, idusuario);
+        consulta.setBoolean(4, estado);
         consulta.executeUpdate();        
         consulta.close();
     }
@@ -92,7 +94,7 @@ public class VeterinarioRepositorio {
         }
     }
 
-    public void baja(Veterinario veterinario) throws SQLException, VeterinarioNoEncontradoExcepcion {
+    public void borrar(Veterinario veterinario) throws SQLException, VeterinarioNoEncontradoExcepcion {
         var consulta = conexion.prepareStatement("UPDATE veterinario SET estado = 0 WHERE identificador = ?");
         consulta.setInt(1, veterinario.getIdentificador());
         try {

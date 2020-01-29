@@ -45,7 +45,7 @@ public class ProvinciaRepositorio {
         return provincia;
     }
 
-    public Provincia obtener(int identificador) throws SQLException, CiudadNoEncontradaExcepcion {
+    public Provincia obtener(int identificador) throws SQLException, ProvinciaNoEncontradaExcepcion {
         var consulta = conexion.prepareStatement("SELECT identificador, nombre, estado, idpais FROM provincia WHERE identificador = ?");
         consulta.setInt(1, identificador);
         var resultado = consulta.executeQuery();
@@ -58,7 +58,7 @@ public class ProvinciaRepositorio {
                     resultado.getInt("idpais")
                 );
             } else {
-                throw new CiudadNoEncontradaExcepcion();
+                throw new ProvinciaNoEncontradaExcepcion();
             }
         }
         finally {
@@ -67,33 +67,34 @@ public class ProvinciaRepositorio {
         }
     }
 
-    public void crear(String nombre, boolean estado) throws SQLException {
+    public void crear(String nombre, boolean estado, int idpais) throws SQLException {
         var consulta = conexion.prepareStatement("INSERT INTO provincia (nombre, estado, idpais) VALUES (?, ?, ?)");
         consulta.setString(1, nombre);
         consulta.setBoolean(2, estado);
+        consulta.setInt(3, idpais);
         consulta.executeUpdate();        
         consulta.close();
     }
 
-    public void modificar(Provincia provincia) throws SQLException, CiudadNoEncontradaExcepcion {
+    public void modificar(Provincia provincia) throws SQLException, ProvinciaNoEncontradaExcepcion {
         var consulta = conexion.prepareStatement("UPDATE provincia SET nombre = ? WHERE identificador = ?");
         consulta.setString(1, provincia.getNombre());
         //consulta.setInt(2, ciudad.getIdprovincia());
         consulta.setInt(3, provincia.getIdentificador());
         try {
-            if (consulta.executeUpdate() == 0) throw new CiudadNoEncontradaExcepcion();
+            if (consulta.executeUpdate() == 0) throw new ProvinciaNoEncontradaExcepcion();
         }
         finally {
             consulta.close();
         }
     }
 
-    public void borrar(Provincia provincia) throws SQLException, CiudadNoEncontradaExcepcion {
+    public void borrar(Provincia provincia) throws SQLException, ProvinciaNoEncontradaExcepcion {
         var consulta = conexion.prepareStatement("UPDATE provincia SET estado = 0 WHERE identificador = ?");
         consulta.setInt(1, provincia.getIdentificador());
         consulta.setBoolean(2, provincia.getEstado());
         try {
-            if (consulta.executeUpdate() == 0) throw new CiudadNoEncontradaExcepcion();
+            if (consulta.executeUpdate() == 0) throw new ProvinciaNoEncontradaExcepcion();
         }
         finally {
             consulta.close();

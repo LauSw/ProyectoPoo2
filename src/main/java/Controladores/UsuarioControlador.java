@@ -35,7 +35,7 @@ public class UsuarioControlador {
         */
         ctx.status(201);
     }
-
+    
     public void borrar(Context ctx) throws SQLException, UsuarioNoEncontradoExcepcion {
         personasRepositorio.borrar(personasRepositorio.obtener(ctx.pathParam("identificador", Integer.class).get()));
         ctx.status(204);

@@ -21,7 +21,7 @@ public class EspecieRepositorio {
     public EspecieRepositorio(Connection connection) throws SQLException {
         this.conexion = connection;
         var consulta = connection.createStatement();
-        consulta.execute("CREATE TABLE IF NOT EXISTS especie (identificador INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT, estado BOOLEAN)");
+        consulta.execute("CREATE TABLE IF NOT EXISTS especie (identificador INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT, estado INTEGER)");
         consulta.close();
     }
 
@@ -64,10 +64,10 @@ public class EspecieRepositorio {
         }
     }
 
-    public void crear(String nombre, boolean estado) throws SQLException {
+    public void crear(String nombre, int estado) throws SQLException {
         var consulta = conexion.prepareStatement("INSERT INTO especie (nombre, estado) VALUES (?, ?)");
         consulta.setString(1, nombre);
-        consulta.setBoolean(2, estado);
+        consulta.setInt(2, estado);
         consulta.executeUpdate();        
         consulta.close();
     }

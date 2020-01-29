@@ -16,16 +16,18 @@ public class Raza {
     private int vida_aproximada;
     private int idespecie;
 
-    public Raza (String nombre, boolean estado, int idespecie) {
+    public Raza (String nombre, boolean estado, int vida_aproximada, int idespecie) {
         this.nombre = nombre;
         this.estado = estado;
+        this.vida_aproximada = vida_aproximada;
         this.idespecie = idespecie;
     }
 
-    public Raza(int identificador, String nombre, boolean estado, int idespecie) {
+    public Raza(int identificador, String nombre, boolean estado, int vida_aproximada, int idespecie) {
         this.identificador = identificador;
         this.nombre = nombre;
         this.estado = estado;
+        this.vida_aproximada = vida_aproximada;
         this.idespecie = idespecie;
     }
 

@@ -66,10 +66,11 @@ public class CiudadRepositorio {
         }
     }
 
-    public void crear(String nombre, boolean estado) throws SQLException {
+    public void crear(String nombre, boolean estado, int idprovincia) throws SQLException {
         var consulta = conexion.prepareStatement("INSERT INTO ciudad (nombre, estado, idprovincia) VALUES (?, ?, ?)");
         consulta.setString(1, nombre);
         consulta.setBoolean(2, estado);
+        consulta.setInt(3, idprovincia);
         consulta.executeUpdate();        
         consulta.close();
     }
